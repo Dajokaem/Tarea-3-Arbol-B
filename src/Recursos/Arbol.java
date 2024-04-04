@@ -71,9 +71,9 @@ public class Arbol {
     }
 
     private Nodo buscar(Nodo actual, int key) {
-        int i = 0;//se empieza a buscar siempre en la primera posicion
+        int i = 0;
 
-        //Incrementa el indice mientras el valor de la clave del nodo sea menor
+       
         while (i < actual.numclaves && key > actual.claves[i]) {
             i++;
         }
@@ -83,8 +83,7 @@ public class Arbol {
             return actual;
         }
 
-        //Si llegamos hasta aqui, entonces hay que buscar los hijos
-        //Se revisa primero si tiene hijos
+        
         if (actual.esHoja) {
             return null;
         } else {
@@ -96,7 +95,7 @@ public class Arbol {
     public void insertar(int key) {
         Nodo r = raiz;
 
-        //Si el nodo esta lleno lo debe separar antes de insertar
+        
         if (r.numclaves == grado - 1) {
             Nodo s = new Nodo(grado);
             raiz = s;
@@ -112,12 +111,12 @@ public class Arbol {
 
 
     private void separar(Nodo x, int i, Nodo y) {
-        //Nodo temporal que sera el hijo i + 1 de x
+       
         Nodo z = new Nodo(grado);
         z.esHoja = y.esHoja;
         z.numclaves = (minimo - 1);
 
-        //Copia las ultimas (t - 1) claves del nodo y al inicio del nodo z      // z = |40|50| | | |
+       
         for (int j = 0; j < (minimo- 1); j++) {
             z.claves[j] = y.claves[(j + minimo)];
         }
@@ -129,23 +128,21 @@ public class Arbol {
             }
         }
 
-        //nuevo tamanio de y                                                    // x =            | | | | | |
-        y.numclaves = (minimo - 1);                                             //               /   \
-        //  |10|20| | | |
-        //Mueve los hijos de x para darle espacio a z
+        //nuevo tamanio de y                                                    
+        y.numclaves = (minimo - 1);                                             
+      
         for (int j = x.numclaves; j > i; j--) {
             x.hijos[(j + 1)] = x.hijos[j];
         }
-        //Reasigna el hijo (i+1) de x                                           // x =            | | | | | |
-        x.hijos[(i + 1)] = z;                                                   //               /   \
-        //  |10|20| | | |     |40|50| | | |
-        //Mueve las claves de x
+                                           
+        x.hijos[(i + 1)] = z;                                                  
+       
         for (int j = x.numclaves; j > i; j--) {
             x.claves[(j + 1)] = x.claves[j];
         }
 
-        //Agrega la clave situada en la mediana                                 // x =            |30| | | | |
-        x.claves[i] = y.claves[(minimo - 1)];                                   //               /    \
+        //Agrega la clave situada en la mediana                                 
+        x.claves[i] = y.claves[(minimo - 1)];                                  
         x.numclaves++;
     }
 
@@ -160,7 +157,7 @@ public class Arbol {
             }
 
             x.claves[i] = key;//asigna el valor al nodo
-            x.numclaves++; //aumenta la cantidad de elementos del nodo
+            x.numclaves++; 
         } else {
             int j = 0;
             //Busca la posicion del hijo
@@ -168,7 +165,7 @@ public class Arbol {
                 j++;
             }
 
-            //Si el nodo hijo esta lleno lo separa
+            
             if (x.hijos[j].numclaves == (grado-1)) {
                 separar(x, j, x.hijos[j]);
 
@@ -188,9 +185,9 @@ public class Arbol {
     private void imprimir(Nodo n) {
         n.imprimir();
 
-        //Si no es hoja
+        
         if (!n.esHoja) {
-            //recorre los nodos para saber si tiene hijos
+            
             for (int j = 0; j <= n.numclaves; j++) {
                 if (n.hijos[j] != null) {
                     System.out.println();
